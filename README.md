@@ -8,6 +8,27 @@ Abbreviations for iterated [RackUnit](http://docs.racket-lang.org/rackunit/api.h
 This is a small collection of macros for applying one function many times.
 
 
+Examples
+--------
+
+```
+(check-true* (lambda (x y #:z [z 0]) (= (+ x y z) 3))
+ [3 0]
+ [1 2]
+ [1 1 #:z 1])
+
+(check-false* string?
+ [1]
+ ['lemons])
+
+(check-apply* +
+ [1 2 3 == 6]
+ [2 2   != 5])
+```
+
+See the test within `./private/rackunit-abbrevs.rkt` for more.
+
+
 Install
 -------
 
@@ -42,27 +63,6 @@ This library defines 3 macros:
   Ditto, but using `check-not-equal?`.
 
 Note: you can mix `==` and `!=` tests in a call to `check-apply*`.
-
-
-Examples
---------
-
-```
-(check-true* (lambda (x y #:z [z 0]) (= (+ x y z) 3))
- [3 0]
- [1 2]
- [1 1 #:z 1])
-
-(check-false* string?
- [1]
- ['lemons])
-
-(check-apply* +
- [1 2 3 == 6]
- [2 2   != 5])
-```
-
-See the test within `./private/rackunit-abbrevs.rkt` for more.
 
 
 Notes
