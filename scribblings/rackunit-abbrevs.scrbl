@@ -51,6 +51,20 @@ The macros here repeatedly apply a standard RackUnit assertion.
  [append '((c)) '((a)) '((t)) != '((d o g))])
 ]
 
+@defform[(check-exn* p f [arg* ...] ...)]{
+  Apply @racket[f] to the arguments @racket[arg*] and assert @racket[(check-exn p (lambda () (f arg*)))] for each.
+}
+
+@examples[#:eval abbreval
+(check-exn* exn:fail:contract? vector-ref
+ [0 #'()]
+ ["hi"])
+
+(check-exn* "\\+: contract violation" +
+ [0 #\0 'O]
+ ['() '()])
+]
+
 
 @section{Notes}
 

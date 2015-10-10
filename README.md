@@ -24,6 +24,10 @@ Examples
 (check-apply* +
  [1 2 3 == 6]
  [2 2   != 5])
+
+(check-exn* exn:fail:contract? +
+ ['(1 2 3)]
+ [1 "2 3"])
 ```
 
 See the test within `./private/rackunit-abbrevs.rkt` for more.
