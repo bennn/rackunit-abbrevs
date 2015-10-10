@@ -12,6 +12,11 @@
   check-apply*
   ;; (check-apply* f [arg* ... == res] ...)
   ;; Desugar into `check-equal?` matching `f arg* ...` against `res`
+
+  check-exn*
+  ;; (check-exn* p f [arg* ...] ...)
+  ;; Assert that each call `(f arg* ...)` raises an exception matching
+  ;;  the predicate `p`.
 )
 
 ;; -----------------------------------------------------------------------------
@@ -68,6 +73,16 @@
                  (syntax/loc stx (void))]))
            stx))))]
     [_ (error 'check-apply* (format "~e\n    Expected (check-apply* f [arg* ... == res] ...) or (check-apply* f [arg* ... != res] ...). In other words, a function and parentheses-delimited lists of arguments & equality or dis-equality symbol & a result value to compare with.\n    Got ~a" loc (syntax->datum stx)))]))
+
+(define-syntax (check-exn* stx)
+  (define loc (syntax->location stx))
+  (syntax-parse stx
+   [(_ p f [arg* ...] ...+)
+    (quasisyntax/loc stx
+      (with-check-info* (list (make-check-location '#,loc))
+        (lambda ()
+          (check-exn p (lambda () (f arg* ...))) ...)))]
+   [_ (error 'check-exn* (format "~e\n    Expected (check-exn* p f [arg* ...] ...)."))]))
 
 ;;; =============================================================================
 
@@ -161,5 +176,15 @@
   (check-apply* +
    [1 2 3 == 6]
    [2 2   != 5])
+
+  ;; -- check-exn
+  (check-exn* exn:fail:contract? +
+   [1 "two"]
+   ['yolo])
+
+  (check-exn* #rx"\\+: contract violation" +
+   [1 "two"]
+   ["three"]
+   ['1 '2 '(3)])
 
 )
