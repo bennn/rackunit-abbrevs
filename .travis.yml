@@ -19,4 +19,7 @@ script:
  - raco test $TRAVIS_BUILD_DIR
 
 after_success:
+  - raco setup --check-pkg-deps rackunit-abbrevs
+  - raco pkg install --deps search-auto cover
+  - raco pkg install --deps search-auto cover-coveralls
   - raco cover -f coveralls -d $TRAVIS_BUILD_DIR/coverage -b .
