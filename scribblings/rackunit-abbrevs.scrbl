@@ -2,7 +2,7 @@
 @require[racket/include]
 @require[scribble/eval]
 
-@title[#:tag "top"]{@bold{RackUnit Abbrevs}}
+@title[#:tag "top"]{RackUnit Abbrevs}
 @author[@hyperlink["https://github.com/bennn"]{Ben Greenman}]
 
 @defmodule[rackunit-abbrevs]
