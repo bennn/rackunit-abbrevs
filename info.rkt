@@ -5,3 +5,4 @@
 (define pkg-desc "")
 (define version "0.0")
 (define pkg-authors '(ben))
+(define scribblings '(("scribblings/rackunit-abbrevs.scrbl" () ("testing" tool))))
