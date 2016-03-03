@@ -56,16 +56,16 @@
 
 (define-syntax (check-apply* stx)
   (define loc (syntax->location stx))
-  (syntax-parse stx #:datum-literals (== !=)
-    [(_ f [arg* ... (~or != ==) res] ...+)
+  (syntax-parse stx #:datum-literals (== != =>)
+    [(_ f [arg* ... (~or != == =>) res] ...+)
      ;; Well-formed call, map each [arg ... res] to a check
      (quasisyntax/loc stx
        (with-check-info* (list (make-check-location '#,loc))
          (lambda ()
            #,@(stx-map
              (lambda (s)
-               (syntax-parse s #:datum-literals (== !=)
-                [[arg* ... == res]
+               (syntax-parse s #:datum-literals (== != =>)
+                [[arg* ... (~or == =>) res]
                  (syntax/loc stx (check-equal? (f arg* ...) res))]
                 [[arg* ... != res]
                  (syntax/loc stx (check-not-equal? (f arg* ...) res))]
@@ -175,6 +175,7 @@
 
   (check-apply* +
    [1 2 3 == 6]
+   [2 2 3 => 7]
    [2 2   != 5])
 
   ;; -- check-exn
