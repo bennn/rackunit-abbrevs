@@ -2,6 +2,7 @@ rackunit-abbrevs
 ================
 [![Build Status](https://travis-ci.org/bennn/rackunit-abbrevs.svg)](https://travis-ci.org/bennn/rackunit-abbrevs)
 [![Coverage Status](https://coveralls.io/repos/bennn/rackunit-abbrevs/badge.svg?branch=master&service=github)](https://coveralls.io/github/bennn/rackunit-abbrevs?branch=master)
+[![Scribble](https://img.shields.io/badge/Docs-Scribble-blue.svg)](http://docs.racket-lang.org/rackunit-abbrevs/index.html)
 
 Abbreviations for iterated [RackUnit](http://docs.racket-lang.org/rackunit/api.html) tests.
 
