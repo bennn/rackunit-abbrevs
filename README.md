@@ -6,8 +6,6 @@ rackunit-abbrevs
 
 Abbreviations for iterated [RackUnit](http://docs.racket-lang.org/rackunit/api.html) tests.
 
-This is a small collection of macros for applying one function many times.
-
 
 Examples
 --------
@@ -23,15 +21,40 @@ Examples
  ['lemons])
 
 (check-apply* +
- [1 2 3 == 6]
- [2 2   != 5])
+ [1 2 3
+  => 6]
+ [2 2
+  != 5])
 
 (check-exn* exn:fail:contract? +
  ['(1 2 3)]
  [1 "2 3"])
 ```
 
-See the test within `./private/rackunit-abbrevs.rkt` for more.
+Test failures are reported in terms of the source location on each test:
+```
+#lang racket/base
+(require rackunit rackunit-abbrevs)
+
+(check-apply* +
+ [1 1
+  => 2]
+ [2 2
+  => 5])
+
+;; --------------------
+;; FAILURE
+;; actual:     4
+;; expected:   5
+;; name:       check-equal?
+;; expression: (check-equal? (+ 2 2) 5)
+;; location:   (#<path:/tmp/example.rkt> 7 1 87 12)
+;; 
+;; Check failure
+;; --------------------
+```
+
+See the tests in `./private/test-rackunit-abbrevs.rkt` for more examples.
 
 
 Install
@@ -58,19 +81,20 @@ This library defines 3 macros:
   Accepts a function `f` and a series of arguments `arg* ...` to `f`.
   Expands into a call `(f arg* ...)` for each parenthesized group of arguments `[arg* ...]`.
   The result of each call is passed to `check-true`.
-  Works great with keywords!
 ##### `(check-false* f [arg* ...] ...)`
   Same as `check_true*`, but asserts that each call to `f` returns `#f`.
 ##### `(check-apply* f [arg* ... == r] ...)`
-  Similarly calls `(f arg* ...)` for each group of arguments.
-  This time, results are compared to the matching `r` via `check-equal?`.
-##### `(check-apply* f [arg* ... != r] ...)`
-  Ditto, but using `check-not-equal?`.
+  Calls `(f arg* ...)` for each group of arguments.
+  Results are compared to the matching `r` via `check-equal?`, or with
+   `check-not-equal?` if `!=` is used instead of `==`.
 
-Note: you can mix `==` and `!=` tests in a call to `check-apply*`.
+At least `=>` and `==>` are synonyms for `==`.
+At least `!=>` is a synonym for `!=`.
 
 
 Notes
 -----
 
-You might also like Jay McCarthy's [rackunit-chk](https://github.com/jeapostrophe/rackunit-chk) package.
+You might also like Jay McCarthy's [rackunit-chk](https://github.com/jeapostrophe/rackunit-chk)
+ and [chk](https://github.com/jeapostrophe/chk) packages.
+
