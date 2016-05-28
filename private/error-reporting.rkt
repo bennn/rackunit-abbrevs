@@ -27,7 +27,7 @@
 
 (define-syntax-class exn-predicate
   ;; exn-predicate is a regular expression or a predicate function
-  (pattern (~or _:procedure)))
+  (pattern (~not (~or _:number _:boolean _:char _:str _:keyword))))
 
 (define-syntax-class args-and-result-pattern
   #:attributes (arg* check-fn? result)

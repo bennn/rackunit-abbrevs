@@ -1,7 +1,6 @@
 #lang racket/base
 
-(require
-  rackunit-abbrevs/private/rackunit-abbrevs)
+(require rackunit-abbrevs/private/rackunit-abbrevs)
 
 (provide
   check-true*

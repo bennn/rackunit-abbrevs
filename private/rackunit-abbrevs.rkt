@@ -25,7 +25,7 @@
 (require
   rackunit
   (for-syntax
-    rackunit-abbrevs/error-reporting
+    rackunit-abbrevs/private/error-reporting
     rackunit
     racket/base
     syntax/parse
