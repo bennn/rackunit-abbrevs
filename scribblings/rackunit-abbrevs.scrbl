@@ -1,6 +1,9 @@
 #lang scribble/manual
-@require[racket/include]
-@require[scribble/eval]
+@require[
+  racket/include
+  scribble/eval
+  (for-label racket/base racket/contract syntax/srcloc)
+]
 
 @title[#:tag "top"]{RackUnit Abbrevs}
 @author[@hyperlink["https://github.com/bennn"]{Ben Greenman}]
@@ -79,8 +82,7 @@ Test failures are reported at the unit test, not at the call to one of our
 These functions are internal to the library but may be useful elsewhere.
 
 @defproc[(syntax->location [stx syntax?]) (list/c any/c (or/c number? #f) (or/c number? #f) (or/c number? #f) (or/c number? #f))]{
-  Convert a syntax object to a list containing location information for RackUnit's
-   @racket[make-check-location].
+  Alias for @racket[build-source-location-list].
 }
 
 @defidform[procedure]{
@@ -93,9 +95,12 @@ These functions are internal to the library but may be useful elsewhere.
 }
 
 
-@section{Notes}
+@section{Other Testing Libraries}
 
-You might also like Jay McCarthy's @hyperlink["https://github.com/jeapostrophe/rackunit-chk"]{rackunit-chk}
- and @hyperlink["https://github.com/jeapostrophe/chk"]{chk}.
+@itemize[
+  @item{@hyperlink["https://github.com/jeapostrophe/rackunit-chk"]{rackunit-chk}}
+  @item{@hyperlink["https://github.com/jeapostrophe/chk"]{chk}}
+  @item{@hyperlink["https://ifigueroap.github.io/racket-quickcheck/"]{Quickcheck}}
+]
 
 

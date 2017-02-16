@@ -10,16 +10,10 @@
 (require
   racket/syntax
   syntax/parse
+  (only-in syntax/srcloc [build-source-location-list syntax->location])
 )
 
 ;; =============================================================================
-
-;;bg; copied from rackunit library (location.rkt)
-(define syntax->location
-  (let ([f* (list syntax-source syntax-line syntax-column syntax-position syntax-span)])
-    (lambda (stx)
-      (for/list ([f (in-list f*)])
-        (f stx)))))
 
 (define-syntax-class procedure
   ;; cat in the hat style
